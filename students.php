@@ -276,10 +276,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script>
-        function sendId(id){
-            document.querySelector("#modal_idnum").innerHTML = id;
-        }
-
         $(document).ready(function(){         
             document.getElementById("searchbtn").addEventListener("click", () => {
                 let i, 
@@ -316,7 +312,7 @@
             })
 
             $(".deleteStudentBtn").on("click", function(){
-                var id = $(this).attr("id");
+                var id = $(this).attr("id")
                 var r = confirm("Are you sure you want to delete this student and all the student's information?");
                 if(r == true){
                     $.ajax({
@@ -325,9 +321,12 @@
                         dataType: 'json',
                         data: { id: id },
                         success: function(info){
-                            alert("Student deleted.");
-                            location.reload();
-                            console.log(info);
+                            alert("Student deleted.")
+                            location.reload()
+                            console.log(info)
+                        },
+                        error: function(){
+                            alert("Error")
                         }
                     })
                 }
