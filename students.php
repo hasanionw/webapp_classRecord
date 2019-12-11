@@ -174,7 +174,7 @@
                         ?>
                         <tr class="tr">
                             <td><?php echo $row["id_num"] ?></td>
-                            <td><a href="studyload.php?id=<?php echo $row["id_num"] ?>" class="btn btn-link text-success searchname" data-toggle="tooltip" data-placement="top" title="View grades"><?php echo $row["fname"]." ".$row["m_init"].". ".$row["lname"] ?></a></td>
+                            <td><a href="studyload.php?id=<?php echo $row["id_num"] ?>" class="btn btn-link text-success searchname" data-toggle="tooltip" data-placement="top" title="View grades" target="_blank"><?php echo $row["fname"]." ".$row["m_init"].". ".$row["lname"] ?></a></td>
                             <td class="coursesearch"><?php echo $row["course"] ?></td>
                             <td><?php echo $row["yearlvl"] ?></td>
                             <td><a href="update.php?id=<?php echo $row["id_num"] ?>" class="btn btn-link text-warning">Update</a></td>
