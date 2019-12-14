@@ -79,12 +79,15 @@
             </div>
             <div class="card-body fixedBody">
                 <div class="card-columns">
+
+                    <!-- PHP code sa pag retrieve sa mga class nga naa sa database -->
                     <?php
-                    $sql = "SELECT * FROM classes";
+                    $sql = "SELECT * FROM classes";  // Query sa pag retrieve sa tanan classes
                     $result = $con->query($sql);
 
                     if($result->num_rows > 0){
-                        while($row = $result->fetch_assoc()){
+                        while($row = $result->fetch_assoc()){  /* Isulod niya ang results sa associative array, then mag sige siya
+                                                                ug loop until mahurot ang sulod sa array */
                     ?>
                     <div class="card">
                         <div class="card-content">
@@ -101,7 +104,7 @@
                                     echo $res["fname"]." ".$res["lname"];                                    
                                 ?>
                                 <br>
-                                # of students: <?php 
+                                # of students: <?php  // Query sa pag count sa # of students sa each class
                                     $sql = "SELECT COUNT(*) AS count FROM classlist WHERE class_id = ".$row["class_id"];
                                     $resultnum = $con->query($sql);
                                     while($num = $resultnum->fetch_assoc()){
@@ -117,13 +120,14 @@
                     </div>
                     <?php
                         }
-                    }
+                    } // End sa while loop
                     ?>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modal sa pag add ug class -->
     <div class="fade modal" tabindex="-1" role="dialog" id="addClassModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -167,6 +171,7 @@
         </div>
     </div>
 
+    <!-- Kailangan ni nga script if mugamit ka ug ajax. Copy lang -->
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -195,17 +200,25 @@
                 $(".navCards").removeCard();
                 $("#newStudentCard").addActive();
             })
+ 
+            $("#addClassBtn").on("click", function(){   // -> Kani kay gikuha niya ang button nga naay ID nga #addClassBtn (line 164)
+                                                        // then mag huwat siya nga i click. If i click gani (which is kanang on("click")),
+                                                        // kay iyang i execute ang sulod sa function...
 
-            $("#addClassBtn").on("click", function(){
-                var courseCode = $("#courseCode").val();
-                var courseDesc = $("#courseDesc").val();
+                var courseCode = $("#courseCode").val();  // -> pasabot ani kay ang sulod sa input nga naa sa line 164
+                                                            // katong input nga naay id nga #courseCode.
+                                                            // Mao ni ang gigamit sa ajax data nga courseCode: courseCode
+                var courseDesc = $("#courseDesc").val();    // -> Pasabot anang val() kay ang value sa element nga gipoint
+                                                            // sa #courseDesc (which is katong input nga naay ID nga #courseDesc)
                 var teacher = $("#teacher").val();
+
                 $.ajax({
-                    url: "addclass.php",
-                    type: 'POST',
-                    dataType: 'json',
+                    url: "addclass.php",      // -> URL sa pasahan niya sa data
+                    type: 'POST',              // -> Mao ni bali method sa pag hatag ug data
+                    dataType: 'json',           // -> Default na ni, apilon lang ni kada ajax
                     data: {
-                        courseCode: courseCode,
+                        courseCode: courseCode,  // -> ang 1st nga courseCode kay katong dawaton sa $_POST["courseCode"]
+                                                // then ang next kay ang value nga sulod anang naas line 199 (var courseCode)
                         courseDesc: courseDesc,
                         teacher: teacher
                     },
@@ -217,15 +230,18 @@
                 });
             });
 
-            $(".deleteClassBtn").on("click", function(){
-                var id = $(this).attr("id");
+            $(".deleteClassBtn").on("click", function(){    // Kani kay ang class iyang gitanaw instead
+                                                            // sa ID, tanawa ang period before sa deleteClassBtn
+                                                            // unlike sa ID (#), period (.) siya kay class
+                                                            
+                var id = $(this).attr("id"); // -> Mao ni gipasa sa 2nd variable sa ajax sa ubos
                 var r = confirm("Are you sure you want to delete this class?");
                 if(r == true){
                     $.ajax({
                         url: "deleteclass.php",
                         type: 'post',
                         dataType: 'json',
-                        data: {id: id},
+                        data: {id: id},  // syntax (post variable: id variable in line 236)
                         success: function(info){
                             alert("Delete successful!");
                             location.reload();
