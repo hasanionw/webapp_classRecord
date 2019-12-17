@@ -79,7 +79,6 @@
             </div>
             <div class="card-body fixedBody">
                 <div class="card-columns">
-
                     <!-- PHP code sa pag retrieve sa mga class nga naa sa database -->
                     <?php
                     $sql = "SELECT * FROM classes";  // Query sa pag retrieve sa tanan classes
